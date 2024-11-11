@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        /* Style for collapsible post list */
+        .collapse-row {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        /* Make the title left-aligned, remove background on hover */
+        .full-row-link {
+            display: block;
+            color: #007bff;
+            font-size: 1.1em;
+            text-decoration: none;
+            text-align: left;  /* Align title to the left */
+        }
+
+        .full-row-link:hover {
+            background-color: transparent;  /* Remove background on hover */
+            text-decoration: none;
+        }
+
+        /* Style for the collapsed post content */
+        .post-content {
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-left: 4px solid #007bff;
+            text-align: left;
+        }
+
+        .post-author {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .post-date {
+            color: #777;
+        }
+
+        .post-text {
+            margin-top: 15px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Icon style */
+        .post-icon {
+            margin-right: 10px;  /* Space between icon and title */
+            color: #007bff;      /* Icon color */
+            font-size: 0.9em;     /* Make the icon smaller */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'posts' %}">New Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'post-detail' id=user.id %}">My Blogs</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn btn-link">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container mt-4">
+                {% for post in posts %}
+                    <div class="collapse-row">
+                        <a class="full-row-link" data-toggle="collapse" href="#collapse{{ forloop.counter }}" role="button" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                            <i class="fas fa-pencil-alt post-icon"></i> 
+                            {{ post.title }}
+                        </a>
+                    </div>
+
+                    <div class="collapse" id="collapse{{ forloop.counter }}">
+                        <div class="card card-body post-content">
+                            <h6 class="post-author">Author: {{ post.author }}</h6>
+                            <h6 class="post-date">Published On: {{ post.date_posted|date:"F d, Y"}}</h6>
+                            <p class="post-text">{{ post.content }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
