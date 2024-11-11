@@ -4,9 +4,9 @@ Blog Application is a simple web application that enables users to create, read,
 
 **Features**
 
--View Blog Posts: Lists all blog posts on the home page.
+- View Blog Posts: Lists all blog posts on the home page.
 
--Create, Edit, and Delete Posts: Full CRUD functionality for blog posts.
+- Create, Edit, and Delete Posts: Full CRUD functionality for blog posts.
 
--User Authentication: User login and registration.
+- User Authentication: User login and registration.
 
